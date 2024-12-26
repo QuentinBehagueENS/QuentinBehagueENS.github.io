@@ -1,5 +1,6 @@
 * {
     padding: 0px;
+    margin: 0px;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
 }
 
 nav {
-    
+    font-family: "Open Sans", sans-serif;           
     box-shadow: 0px 2px 4px #5d5d5d;
     position: sticky;
     width: 100%;
@@ -98,6 +99,11 @@ nav > ul li:hover .sous{
     display: flex;
     flex-direction: row;
     width: 100%;
+}
+@media (max-width: 768px) {
+    .container {
+           flex-direction: column; 
+    }
 }
 
 .left-column {
