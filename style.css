@@ -1,3 +1,7 @@
+* {
+    padding: 0px;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -8,6 +12,8 @@ body {
 }
 
 nav {
+    
+    box-shadow: 0px 2px 4px #5d5d5d;
     position: sticky;
     width: 100%;
     background-color: rgb(109, 145, 151);
@@ -16,8 +22,8 @@ nav {
 }
 
 nav a:hover{
-    color: rgb(0, 217, 255);
-    border-bottom: 2px solid rgb(0, 217, 255);
+    color: rgb(213, 188, 160);
+    border-bottom: 2px solid rgb(213, 188, 160);
 }
 
 
@@ -47,7 +53,6 @@ nav a{
 
 .sous{
     display: none;
-    box-shadow: 0px 1px 2px #CCC;
     background-color: rgb(109, 145, 151);
     position: absolute;
     width: 100%;
@@ -55,9 +60,7 @@ nav a{
 }
 
 nav ul .sous{
-    
     width: 25%;
-    text-align: center;
 }
 
 nav > ul li:hover .sous{
@@ -66,13 +69,16 @@ nav > ul li:hover .sous{
 
 
 .sous li{
-    float: none;
+
     width: 100%;
     text-align: left;
 }
 
 .sous a{
-    padding: 10px  0px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    padding: 10px 10px 10px;
     border-bottom: none;
 }
 
@@ -86,3 +92,5 @@ nav > ul li:hover .sous{
     content:" ▼";
     font-size: 12px;
 }
+
+
