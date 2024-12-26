@@ -94,3 +94,32 @@ nav > ul li:hover .sous{
 }
 
 
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.left-column {
+    display: flex;
+
+    flex: 1;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+}
+
+.right-column {
+    flex: 2;
+    padding: 40px;
+}
+
+.centered{
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    width: 200px;
+    border-radius: 40px;
+}

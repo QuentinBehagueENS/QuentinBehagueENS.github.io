@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Web Personnelle</title>
     <link href="style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
 <body background="background.png" bgproperties="fixed"-->
 
 <!-- Title section --> 
- <header><h1>Bienvenue sur ma page personnelle</h1> </header>
 
 <!-- Navigation menu -->
 <nav >
@@ -17,7 +17,7 @@
         <li><a href="#">Documents</a></li>
         <li><a href="#">Programmes</a></li>
         <li class="deroulant"><a href="#">Contact</a>
-            <ul class="sous"> <!-- style="height: 300px; overflow-y: scroll;"> -->
+            <ul class="sous">
                 <li><a href="#">GitHub</a></li>
                 <li><a>quentin.behague@ens-rennes.fr</a></li>
                 <li><a>06 46 15 00 15</a></li>
@@ -28,13 +28,17 @@
 </nav>
 
 <div class="container">
-    <div class="column left-column">
-        <h2>Colonne de gauche</h2>
-        <p>Contenu de la colonne de gauche.</p>
+    <div class="left-column">
+        <div style = "width : 22vw; background-color: rgb(255, 255, 255); box-shadow: 1px 4px 8px #5d5d5d; border-radius: 8px;">
+            <img src="LogoENS.png" id="logo" style = "margin: 20px;">
+            <h2>Quentin Behague</h2>
+            <h3>Étudiant à l'École normale Supérieure de Rennes</h3>
+            <p>Contenu de la colonne de gauche.</p>
+        </div>
     </div>
-    <div class="column right-column">
-        <h2>Colonne de droite</h2>
-        <p>Contenu de la colonne de droite.</p>
+    <div class="right-column">
+        <h2>Profil</h2>
+        <p>Je suis actuellement étudiant à l'Ecole Normae Supérieure de Rennes, en première année du diplôme du Magistère de Mathématiques.</p>
     </div>
 </div>
 
