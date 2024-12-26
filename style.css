@@ -129,3 +129,10 @@ nav > ul li:hover .sous{
     width: 200px;
     border-radius: 40px;
 }
+
+#box00 {
+    width : 280px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 4px 8px #5d5d5d;
+    border-radius: 8px;
+}
