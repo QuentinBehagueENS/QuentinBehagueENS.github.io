@@ -6,24 +6,27 @@
     <title>Page Web Personnelle</title>
     <link href="style.css" rel="stylesheet">
 </head>
-<body>
+<body background="background.png" bgproperties="fixed">
 
 <!-- Title section --> 
- <header> <h1>Bienvenue sur ma page personnelle</h1> </header>
+ <header><h1>Bienvenue sur ma page personnelle</h1> </header>
 
-<!-- Navigation menu --> 
-<nav>
+<!-- Navigation menu -->
+<nav >
     <ul>
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
+        <li><a href="#">Documents</a></li>
+        <li><a href="#">Programmes</a></li>
+        <li class="deroulant"><a href="#">Contact</a></li>
+            <ul class="sous"> <!-- style="height: 300px; overflow-y: scroll;"> -->
+                <li><a href="#">GitHub</a></li>
+                <li><a>quentin.behague@ens-rennes.fr</a></li>
+                <li><a>06 46 15 00 15</a></li>
+            </ul>
+        <li><a href="#">A propos</a></li>
     </ul>
 </nav>
 
 <div class="container">
-    <img src="profile.jpg" alt="Photo de profil" class="profile-img"> 
-    <p> ... </p>
-    <div class="class_name"> ... </div>
 </div>
 
     <footer> ... </footer>
