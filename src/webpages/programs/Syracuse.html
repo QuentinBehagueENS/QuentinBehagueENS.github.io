@@ -14,35 +14,56 @@
         }
         input[type="number"] {
             height: 50px;
-            padding: 10px;
+            margin: 10px;
             font-size: 16px;
         }
         button {
             height: 50px;
             font-size: 16px;
-            margin-left: 10px;
+            margin: 10px;
+            padding: 10px;
             cursor: pointer;
+            margin-left: 8px;
+            background-color: #6D9197;
+            border-radius: 10px;
+            border: 2px solid #28363D;
+            color: #000000;
+            text-align: center;
+            cursor: pointer;
+            
+            transition: all 0.5s;
+        }
+
+        button:hover {
+            background-color: #6D9197;
+            border: 2px solid  #D5BCA0;
+            color: #D5BCA0;
         }
     </style>
 </head>
 <body background="../../assets/images/background.png" bgproperties="fixed"-->
 
-    <h1> Suite de Syracuse</h1>
+    <div class="box01" style="padding: 10px;margin: 20px;"><h1>Suite de Syracuse</h1></div>
 
-    <div style="display: flex;">
+    <div class="container">
         <div  class=" left-column">
             <div class="box01">
             <p>Entrez un entier strictemment positif :</p>
 
 
             <input type="number" id="inputNumber" placeholder="Enter a number" min="1">
-            <button onclick="generateSyracuse()">Génerer</button>
+            <button onclick="generateSyracuse()"> Génerer </button>
+            <div id="metrics" style="margin-top: 20px; font-size: 1rem;">
+                <!-- Les métriques seront affichées ici -->
+            </div>
             </div>
         </div>
 
     <div class="right-column">
-        <div class="box01">
-        <canvas id="syracuseChart"></canvas>
+        <div class="box01" style="display: flex; width :100%;">
+        <canvas id="syracuseChart" style="width: 100% !important;
+        height: 400px; 
+        max-width: 100%;"></canvas>
         </div>
     </div>
 

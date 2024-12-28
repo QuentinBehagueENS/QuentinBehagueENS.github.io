@@ -12,6 +12,10 @@ body {
     background-image: "background.png";
     color: rgb(40, 54, 61);}
 
+h1 {
+    margin: 1vw;
+}
+
 h2 {
     margin : 1vw;
 }
@@ -132,4 +136,14 @@ nav > ul li:hover .sous{
     background-color: rgb(255, 255, 255);
     box-shadow: 1px 4px 8px #5d5d5d;
     border-radius: 8px;
+}
+
+.imglink {
+    
+    transition: filter 0.5s ease-in-out;
+}
+
+.imglink :hover {
+    filter: hue-rotate(260deg);
+    transform: scale(1.2);
 }
