@@ -4,10 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suite de Syracuse</title>
-    <link href="/src/assets/styles/global.css" rel="stylesheet">
+    <link href="../../assets/styles/global.css" rel="stylesheet">
     <link href="/public/favicon.png" rel="icon" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        #chart-container {
+            margin: auto;
+        }
+        input[type="number"] {
+            height: 50px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            height: 50px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body background="../../assets/images/background.png" bgproperties="fixed"-->
 
+    <h1> Suite de Syracuse</h1>
+
+    <div style="display: flex;">
+        <div  class=" left-column">
+            <div class="box01">
+            <p>Entrez un entier strictemment positif :</p>
+
+
+            <input type="number" id="inputNumber" placeholder="Enter a number" min="1">
+            <button onclick="generateSyracuse()">Génerer</button>
+            </div>
+        </div>
+
+    <div class="right-column">
+        <div class="box01">
+        <canvas id="syracuseChart"></canvas>
+        </div>
+    </div>
+
+    </div>
+    <script type="text/javascript" src="../../assets/scripts/syracuse.js"></script>
 </body>
 </html>
