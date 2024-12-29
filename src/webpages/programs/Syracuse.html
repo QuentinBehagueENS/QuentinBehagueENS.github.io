@@ -5,8 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suite de Syracuse</title>
     <link href="../../assets/styles/global.css" rel="stylesheet">
-    <link href="/public/favicon.png" rel="icon" type="image/x-icon">
+    <link href="../../../public/favicon.png" rel="icon" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                displayMath: [['$$', '$$']], // Définir les délimiteurs pour les équations
+                inlineMath: [['$', '$']],
+                tags: 'none', // Pas de numérotation automatique des équations
+            },
+            options: {
+                linebreaks: { automatic: true } // Activer les retours à la ligne automatiques
+            }
+        };
+    </script> 
     
     <style>
         #chart-container {
@@ -41,33 +54,77 @@
         }
     </style>
 </head>
+
+<!-- Navigation menu -->
+<nav style="z-index: 10;">
+    <ul>
+        <li><a href="../../../index.html">Accueil</a></li>
+        <li><a href="../../webpages/files.html">Documents</a></li>
+        <li class="deroulant"><a>Programmes</a>
+            <ul class="sous">
+                <li><a>Suite de Syracuse</a></li>
+                <li><a href="../../webpages/programs/Julia.html">Ensemble de Julia</a></li>
+            </ul>
+        </li>
+        <li class="deroulant"><a>Contact</a>
+            <ul class="sous">
+                <li><a href="https://github.com/QuentinBehagueENS">Mon GitHub</a></li>
+                <li><a>quentin.behague@ens-rennes.fr</a></li>
+                <li><a>06 46 15 00 15</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
+
 <body background="../../assets/images/background.png" bgproperties="fixed"-->
 
-    <div class="box01" style="padding: 10px;margin: 20px;"><h1>Suite de Syracuse</h1></div>
+    <div class="box01">
+        <h1>Suite de Syracuse</h1> 
+        <div class="container">
+            <div  class="left-column" style="flex:4;">
+                <p>
+                    La suite de Syracuse, également appelée suite de Collatz, est une suite d'entiers naturels définie par une graine $n_0 \in \mathbb N^*$ et une relation de récurrence très simple :
+                <p>
+                <div class="math">
+                     $$\forall k \in \mathbb N, n_{k+1} = \left\{\begin{array}[cc]{} \frac{n_k} {2} & \textrm{ Si \(k\) est pair,} \\ 3n_{k} + 1 & \textrm{ sinon.} \end{array}\right. $$
+                </div>
+                <p>
+                Regardons ce que cela donne pour la graine $13$ :
+                </p>
+                <div class="math">
+                $$13 \rightarrow 40 \rightarrow 20 \rightarrow 10 \rightarrow 5 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1$$
+                </div>
+                <p>
+                On remarque qu'une fois le nombre $1$ atteint, on va de nouveau obtenir $4$. On trouve ainsi l'existence d'un cycle, le cycle trivial : $4 \rightarrow 2 \rightarrow 1 \rightarrow 4$.
+                D'ailleurs, après plusieurs tentatives, on se rend compte qu'on fini toujours par obtenir $1$. On se demande alors si c'est le cas pour n'importe quelle graine. Cette conjecture porte le nom de Conjecture de Syracuse.
+            </p></div>
+            <div  class="right-column"><img src="../../assets/images/SyracuseTree.png" width="100%"></div>
+        </div>
+        <p> Vous trouverez ci-dessous un programme que j'ai implémenté lors de mon grand oral, il vous permettra de visualiser la suite de syracuse d'une graine donnée.</p>
+    </div>
 
     <div class="container">
         <div  class=" left-column">
             <div class="box01">
-            <p>Entrez un entier strictemment positif :</p>
+            <p style="text-align: center;">Entrez un entier strictemment positif :</p>
 
 
             <input type="number" id="inputNumber" placeholder="Enter a number" min="1">
             <button onclick="generateSyracuse()"> Génerer </button>
-            <div id="metrics" style="margin-top: 20px; font-size: 1rem;">
-                <!-- Les métriques seront affichées ici -->
-            </div>
+            <div id="metrics" style="margin: 20px;"></div>
             </div>
         </div>
 
     <div class="right-column">
-        <div class="box01" style="display: flex; width :100%;">
-        <canvas id="syracuseChart" style="width: 100% !important;
-        height: 400px; 
-        max-width: 100%;"></canvas>
+        <div class="box01" style="display: flex; width :90%;">
+        <canvas id="syracuseChart" style="width: 100%; max-width: 100%;"></canvas>
         </div>
     </div>
 
     </div>
     <script type="text/javascript" src="../../assets/scripts/syracuse.js"></script>
+
 </body>
 </html>
