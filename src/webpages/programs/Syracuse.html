@@ -19,40 +19,7 @@
                 linebreaks: { automatic: true } // Activer les retours à la ligne automatiques
             }
         };
-    </script> 
-    
-    <style>
-        #chart-container {
-            margin: auto;
-        }
-        input[type="number"] {
-            height: 50px;
-            margin: 10px;
-            font-size: 16px;
-        }
-        button {
-            height: 50px;
-            font-size: 16px;
-            margin: 10px;
-            padding: 10px;
-            cursor: pointer;
-            margin-left: 8px;
-            background-color: #6D9197;
-            border-radius: 10px;
-            border: 2px solid #28363D;
-            color: #000000;
-            text-align: center;
-            cursor: pointer;
-            
-            transition: all 0.5s;
-        }
-
-        button:hover {
-            background-color: #6D9197;
-            border: 2px solid  #D5BCA0;
-            color: #D5BCA0;
-        }
-    </style>
+    </script>
 </head>
 
 <!-- Navigation menu -->
@@ -88,7 +55,7 @@
                     La suite de Syracuse, également appelée suite de Collatz, est une suite d'entiers naturels définie par une graine $n_0 \in \mathbb N^*$ et une relation de récurrence très simple :
                 <p>
                 <div class="math">
-                     $$\forall k \in \mathbb N, n_{k+1} = \left\{\begin{array}[cc]{} \frac{n_k} {2} & \textrm{ Si \(k\) est pair,} \\ 3n_{k} + 1 & \textrm{ sinon.} \end{array}\right. $$
+                     $$\forall k \in \mathbb N, n_{k+1} = \left\{\begin{array}[cc]{} \frac{n_k} {2} & \textrm{ Si \(n_k\) est pair,} \\ 3n_{k} + 1 & \textrm{ sinon.} \end{array}\right. $$
                 </div>
                 <p>
                 Regardons ce que cela donne pour la graine $13$ :

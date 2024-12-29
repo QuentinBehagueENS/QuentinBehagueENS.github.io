@@ -163,3 +163,52 @@ nav > ul li:hover .sous{
     filter: hue-rotate(260deg);
     transform: scale(1.2);
 }
+
+
+@media (max-width: 768px) {
+    .juliacontainer {
+        width:80vw; 
+        height: 80vw; 
+        display:flex; 
+        justify-content: center;
+    }
+}
+@media (min-width: 768px) {
+    .juliacontainer {
+        width: 30vw; 
+        height: 30vw; 
+        display:flex; 
+        justify-content: center;
+    }
+}
+
+#chart-container {
+    margin: auto;
+}
+input[type="number"] {
+    height: 50px;
+    margin: 10px;
+    font-size: 16px;
+}
+button {
+    height: 50px;
+    font-size: 16px;
+    margin: 10px;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 8px;
+    background-color: #6D9197;
+    border-radius: 10px;
+    border: 2px solid #28363D;
+    color: #000000;
+    text-align: center;
+    cursor: pointer;
+    
+    transition: all 0.5s;
+}
+
+button:hover {
+    background-color: #6D9197;
+    border: 2px solid  #D5BCA0;
+    color: #D5BCA0;
+}
