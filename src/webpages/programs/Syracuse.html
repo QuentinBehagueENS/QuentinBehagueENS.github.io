@@ -8,6 +8,8 @@
     <link href="../../../public/favicon.png" rel="icon" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="../../assets/styles/prism.css">
+    <script src="../../assets/scripts/prism.js"></script>
     <script>
         MathJax = {
             tex: {
@@ -26,11 +28,11 @@
 <nav style="z-index: 10;">
     <ul>
         <li><a href="../../../index.html">Accueil</a></li>
-        <li><a href="../../webpages/files.html">Documents</a></li>
+        <li><a href="../blog.html">Blog</a></li>
         <li class="deroulant"><a>Programmes</a>
             <ul class="sous">
                 <li><a>Suite de Syracuse</a></li>
-                <li><a href="../../webpages/programs/Julia.html">Ensemble de Julia</a></li>
+                <li><a href="../programs/Julia.html">Ensemble de Julia</a></li>
             </ul>
         </li>
         <li class="deroulant"><a>Contact</a>
@@ -90,7 +92,36 @@
     </div>
 
     </div>
-    <script type="text/javascript" src="../../assets/scripts/syracuse.js"></script>
 
+        <!--
+    <div class="box01">
+        <h2>La conjecture de Syracuse</h2>
+        <p>Pour résoudre le problème, il y a deux possibilités, soit la conjecture est fausse - "il suffit" alors de trouver un contre exemple - soit la conjecture est vraie, et il faut le démontrer.
+        Si on se penche sur la première possibilité, on constate qu'ill y a deux type de contre exemple potentiels. On pourrait trouver une graine telle que la suite engendrée ne soit pas bornée ou on pourrait trouver un cycle différent du cycle trivial.
+        C'est en raison de cette disjonction que l'on sépare la conjecture en deux sous-conjectures plus faible :</p>
+        <ul>
+            <li> Il n'existe aucune graine telle que la suite engencrée soit non bornée.</li>
+            <li> Il n'existe aucun cylcle diffèrent du cycle trivial.</li>
+        </ul>
+        <p>Dans une première partie nous allons nous intéresser à l'existence de cycles ...</p>
+        Introduisons quelques notations :
+        On note l'appplication de Collatz :
+        $$C(n) = \begin
+    
+        <h2>Quelques résultats sur l'existences de cycles</h2>
+    </div>
+    <div class="box01">
+    <pre  class="line-numbers"><code class="language-Python">def verification_syracuse_0(n):
+    for k in range(1, n+1):
+        while k != 1:
+            if k % 2 == 1:
+                k = 3*k + 1
+            else:
+                k = k // 2
+    return True</code></pre>
+    </div>
+    -->
+
+    <script type="text/javascript" src="../../assets/scripts/syracuse.js"></script>
 </body>
 </html>

@@ -24,6 +24,15 @@ h2 {
 h3 {
     margin: 1vw;
 }
+ul {
+    text-align: left;
+    font-family: "Georgia";
+    font-size: large;
+    line-height: 1.4;
+    white-space: normal;
+    width: 100%;
+    margin-left: 30px;
+}
 
 p {
     word-wrap: break-word;
@@ -32,8 +41,8 @@ p {
     font-size: large;
     line-height: 1.4;
     white-space: normal;
-    width: 100%; /* Le paragraphe prend 90% de la largeur du div */
-    margin: 0 auto; /* Centrer le paragraphe horizontalement */
+    width: 100%; 
+    margin: 0 auto;
 }
 
 .math {
@@ -62,6 +71,7 @@ nav a:hover{
     border-bottom: 2px solid rgb(213, 188, 160);}
 
 nav ul {
+    margin-left: 0px;
     list-style-type: none;}
 
 nav ul::after{
@@ -73,7 +83,9 @@ nav li {
     float: left;
     width: 25%;
     text-align: center;
-    justify-content: center;}
+    justify-content: center;
+    overflow-x: scroll;
+}
 
 nav a{
     display: block;
@@ -155,6 +167,12 @@ nav > ul li:hover .sous{
     border-radius: 8px;
 }
 
+.box02{
+    padding: 10px;
+    margin : 20px;
+    background-color: rgb(210, 210, 210);
+}
+
 .imglink {
     transition: filter 0.5s ease-in-out;
 }
@@ -211,4 +229,61 @@ button:hover {
     background-color: #6D9197;
     border: 2px solid  #D5BCA0;
     color: #D5BCA0;
+}
+/*
+
+.flexbox-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content:space-around;
+}
+
+.flexbox-item {
+    padding: 10px;
+    margin : 10px;
+    flex-shrink: 0;
+    align-self: center;
+    text-align: center;
+    box-shadow: 1px 4px 8px #4e4e4e;
+    min-height: 400px;
+    min-width: 200px;
+    border-radius: 20px;
+    border: solid 10px #aac4bc;
+    background-color: #ffffff;
+    transition: all .3s ease;
+}*/
+
+
+.flexbox-container {
+    margin: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: left;
+}
+
+.flexbox-item {
+    padding: 10px;
+    margin : 10px;
+    text-align: center;
+    box-shadow: 1px 4px 8px #4e4e4e;
+    min-width: 400px;
+    max-width: 600px;
+    margin: 1%;
+    margin-top: 2%;
+    border-radius: 20px;
+    border: solid 10px #aac4bc;
+    background-color: #ffffff;
+    flex : 5;
+    transition: all .3s ease;
+}
+
+.flexbox-item:hover {
+    box-shadow: 1px 6px 12px #4e4e4e;
+    border: solid 10px rgb(213, 188, 160);
+    -ms-transform: scale(1.09);
+    -webkit-transform: scale(1.02);
+    transform: scale(1.04);
+    background-color: #ffffff;
 }

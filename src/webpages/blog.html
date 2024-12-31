@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suite de Syracuse</title>
+    <link href="../assets/styles/global.css" rel="stylesheet">
+    <link href="../../public/favicon.png" rel="icon" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<!-- Navigation menu -->
+<nav style="z-index: 10;">
+    <ul>
+        <li><a href="../../../index.html">Accueil</a></li>
+        <li><a>Blog</a></li>
+        <li class="deroulant"><a>Programmes</a>
+            <ul class="sous">
+                <li><a href="./programs/Syracuse.html">Suite de Syracuse</a></li>
+                <li><a href="./programs/Julia.html">Ensemble de Julia</a></li>
+            </ul>
+        </li>
+        <li class="deroulant"><a>Contact</a>
+            <ul class="sous">
+                <li><a href="https://github.com/QuentinBehagueENS">Mon GitHub</a></li>
+                <li><a>quentin.behague@ens-rennes.fr</a></li>
+                <li><a>06 46 15 00 15</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
+
+<body background="../assets/images/background.png" bgproperties="fixed"-->
+
+<div class="box01" style="display: flex;">
+    <h1>Blog </h1><img src="../assets/images/Blog.png" width="50px" height="50px" style="margin:auto; margin-right: 10px;">
+</div>
+
+<div class="flexbox-container" style="font-size: 13px;">
+    <div class="flexbox-item" onclick="changePage('./article/puzzle.html')">
+        <img src="../assets/images/Puzzle.PNG" width="300px">
+        <h2>La difficulté des puzzles</h2>
+        <p style="text-align: center;">Plongeons ensemble dans l'univers des problèmes NP-complets puzzlesques.<p>
+    </div>
+
+    <div class="flexbox-item" onclick="changePage('./article/syracuse.html')" style="align-content:center">
+        <img src="../assets/images/Syracuse.png" width="400px">
+        <h2>Un cycle non trivial pour Syracuse ?</h2>
+        <p style="text-align: center;">Intéressons nous à la conjecture de Collatz et à l'existence d'un cas particulier de cycle non trivial.<p>
+    </div>
+
+    <div class="flexbox-item">
+        qsdfg
+    </div>
+
+<div>
+
+
+
+<script>
+    function changePage(link){
+        window.location.href = link;
+    }
+</script>
+</body>
+
+</html>
+
