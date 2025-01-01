@@ -55,65 +55,257 @@
 
     <h2>Motivation</h2>
     <p>
-        Résoudre un puzzle, c'est généralement très long, sauf si vous vous appellez Alejandro Clemente. Mais, quand est-il pour un ordinateur ? Les puzzles sont ils facile à résoudre algorithmiquement ?
+        Résoudre un puzzle, c'est généralement très long, sauf si vous vous appelez Alejandro Clemente. Mais, quand est-il pour un ordinateur ? 
+        Les puzzles sont-ils facile à résoudre algorithmiquement ?
     </p>
     <p>
-        C'est la question que je me suis posé à l'occasion de mon sujet de TIPE sur le thème du jeu et des sports (2022-2023), et la réponse est, ça dépent !
+        C'est la question que je me suis posé à l'occasion de mon sujet de TIPE sur le thème du jeu et des sports (2022-2023), et la réponse est... ça dépend !
     </p>
     <p>
-        En effet, dans la majorité des puzzles, si deux pièces quelconques sont compatibles, alors elles seront nécessairement voisines dans la solution. Dans ce cas là, c'est simple de résoudre le problème : pour un puzzle de taille $m \times n$, il suffit d'effectuer $O(m^2n^2)$ opérations.
-        Malheuresement, si on autorise des pièces qui ne sont pas voisine dans le puzzle complet à être compatible, ça se corse !
+        En effet, dans la majorité des puzzles, si deux pièces quelconques sont compatibles, alors elles seront nécessairement voisines dans la solution. 
+        Dans ce cas-là, c'est simple de résoudre le problème : pour un puzzle de taille $m \times n$, il suffit d'effectuer $O(m^2n^2)$ opérations.
+        Malheureusement, si on autorise des pièces qui ne sont pas voisines dans le puzzle complet à être compatible, ça se corse !
     </p>
-
-
+    <p>
+        À l'attention du lecteur : Cet article n'est qu'un résumé peu rigoureux d'un travail de recherche plus complet.
+        Je vous conseille, si le sujet vous intéresse, de lire cet article plutôt que l'article détaillé, moins "divertissant", tout de même disponible <a href="../../assets/files/rapportpuzzle.pdf">ici</a>.
+    </p>
 
 
     <h2 style="margin-top: 40px;">Représentation du problème</h2>
     <p>
-        Pour représenter une pièce de puzzle, nous utiliserons des tuiles de Wang étiquettée par des entiers relatifs. Si $e$ est la valeur assignée à une face, alors, $|e|$ représente le type de la face et $\textrm{sng}(e)$ indique si la face est mâle ou femelle. La valeur $0$ est particulière, on s'en servira pour indiquer les faces plates.
+        Pour représenter une pièce de puzzle, nous utiliserons des tuiles de Wang étiquetée par des entiers relatifs.
+        Si $e$ est la valeur assignée à une face, alors, $|e|$ représente le type de la face et $\textrm{sng}(e)$ indique si la face est mâle ou femelle.
+        La valeur $0$ est particulière, on s'en servira pour indiquer les faces plates.
     </p>
     <div style="text-align: center; margin:20px">
-    <figure role="figure">
-        <img src="../../assets/images/representation.png" width="40%">
-        <figcaption style="margin-top: 20px;">
-           <strong>Figure 1 - </strong>Représentation d'une pièce de puzzle
-        </figcaption>
-     </figure>
+        <figure role="figure">
+            <img src="../../assets/images/representation.png" width="50%">
+            <figcaption>
+            <strong>Figure 1 - </strong>Représentation d'une pièce de puzzle
+            </figcaption>
+        </figure>
     </div>
-    <p>Une permutation des pièces est donc considérée comme valide si toutes les paires de faces voisines portent des valeurs opposées et si les seules faces portant l'indice $0$ sont utilisées pour les contour.</p>
+    <p>
+        Une permutation des pièces est donc considérée comme valide si toutes les paires de faces voisines portent des valeurs opposées et si les seules faces portant l'indice $0$ sont utilisées pour les contours.
+    </p>
     <div style="text-align: center; margin:20px">
-    <figure role="figure">
-        <img src="../../assets/images/instancevalide.png" width="40%">
-        <figcaption style="margin-top: 20px;">
-           <strong>Figure 2 - </strong>Instance valide pour le problème PUZZLE.
-        </figcaption>
-     </figure>
+        <figure role="figure">
+            <img src="../../assets/images/instancevalide.png" width="40%">
+            <figcaption style="margin-top: 20px;">
+            <strong>Figure 2 - </strong>Instance valide pour le problème PUZZLE.
+            </figcaption>
+        </figure>
     </div>
     <p>
         On définit alors le problème suivant :
     </p>
     <div class="box01">
-        <p><strong>Définition :</strong> Le problème de décision PUZZLE est définit par :</p>
+        <p><strong>Définition :</strong> Le problème de décision PUZZLE est défini par :</p>
         <ul>
             <li><strong>Instance : </strong>Un couple $(m, n)$ et un jeu de $m \times n$ pièces.</li>
             <li><strong>Question :</strong> Existe-t-il un pavage de dimensions $m \times n$ tel que pour toute pièce, chaque bord de cette pièce est numéroté par l'opposé du bord de la pièce adjacente ?</li>
         </ul>
     </div>
     <p>
-    Dans cet article, nous allons nous intéresser à une variante plus facile du problème puzzle appelée PUZZLE-POSITION. Les règle sont les mêmes que pour PUZZLE, mais la position des pièces est déjà fournit, il suffit de trouver leur orientation.
+    Dans cet article, nous allons nous intéresser à deux variantes plus faciles du problème PUZZLE appelées PUZZLE-POSITION et PUZZLE-ORIENTATION. Les règles sont les mêmes que pour PUZZLE, mais la position des pièces, respectivement l'orientation, est déjà fournie.
     </p>
     <div class="box01">
-        <p><strong>Définition :</strong> Le problème de décision PUZZLE-POSITION est définit par :</p>
+        <p><strong>Définition :</strong> Le problème de décision PUZZLE-POSITION est défini par :</p>
         <ul>
             <li><strong>Instance : </strong>Un couple $(m, n)$, un jeu de $m \times n$ pièces, une liste correspondant à la position des pièces dans le pavage.</li>
-            <li><strong>Question :</strong>Existe-t-il une orientation des pièces telle que pour toute pièce du pavage obtenu, chaque bord de cette pièce est numérotée par l'opposé du bord de la pièce adjacente ?</li>
+            <li><strong>Question : </strong>Existe-t-il une orientation des pièces telle que pour toute pièce du pavage obtenu, chaque bord de cette pièce est numérotée par l'opposé du bord de la pièce adjacente ?</li>
+        </ul>
+    </div>
+    <div class="box01">
+        <p><strong>Définition :</strong> Le problème de décision PUZZLE-ORIENTATION est défini par :</p>
+        <ul>
+            <li><strong>Instance : </strong>Un couple $(m, n)$, un jeu de $m \times n$ pièces, une liste correspondant à l'orientation des pièces dans le pavage.</li>
+            <li><strong>Question :</strong> Existe-t-il une orientation des pièces telle que pour toute pièce du pavage obtenu, chaque bord de cette pièce est numérotée par l'opposé du bord de la pièce adjacente ?</li>
         </ul>
     </div>
 
 
-    <h2 style="margin-top: 40px;">Représentation du problème</h2>
+    <h2 style="margin-top: 40px;">$NP$-complétude et variantes</h2>
+
+    <p>On sait depuis 2009 que le problème PUZZLE est $NP$-complet. 
+    Ce sont les chercheurs Yasuhiko Takenaga et Toby Walsh qui ont démontré ce résultat en effectuant une réduction directe à SAT.
+    Je vous invite fortement à lire leur <a href="https://arxiv.org/abs/0903.1147">article</a> si la $NP$-complétude vous intéresse.
+    </p>
+    <div class="box02"><p><strong>Théorème :</strong> </p>
+        <p>
+            Le problème PUZZLE est $NP$-complet.
+        </p>
+    </div>
+    <p>
+    Pour mon TIPE, j'avais démontré ce résultat d'une autre manière en prouvant que le problème consistant à résoudre uniquement le contour de PUZZLE était déjà $NP$-complet (en effectuant une réduction à 2-PARTITION).
+    Il ne reste alors qu'à effectuer une seconde réduction immédiate en remplissant l'intérieur du puzzle avec des pièces "qui fonctionnent bien" (cf Figure 3).
+    </p>
+    <div style="text-align: center; margin:20px">
+        <figure role="figure">
+            <img src="../../assets/images/reductioncontour.PNG" width="70%">
+            <figcaption style="margin-top: 20px;">
+               <strong>Figure 3 - </strong> Instance valide pour le problème PUZZLE.
+            </figcaption>
+         </figure>
+    </div>
+    <p> 
+        Pour rendre la tâche plus intéressante, je me suis donc intéressé à deux variantes du problème PUZZLE. 
+        La première, PUZZLE-ORIENTATION, considère que l'on a connaissance de l'orientation des pièces, cela réduit fortement le nombre de possibilités, et le problème est alors plus simple.
+    </p>
+    <p style="margin-top: 40px;">
+        Cependant il reste encore $NP$-complet. En réalité, la preuve proposé par Yasuhiko Takenaga et Toby Walsh de la $NP$-complétude de PUZZLE ne se sert pas du fait que les pièces ont une orientation, elle peut donc trivialement être adaptée pour ce nouveau problème.
+        Considérer ce problème à pourtant son intérêt comme nous allons le voir dans la suite.
+    </p>
+    <div class="box02"><p><strong>Théorème :</strong> </p>
+        <p>
+            Le problème PUZZLE-POSITION est $NP$-complet.
+        </p>
+    </div>
+    <p style="margin-top: 40px;">
+        Le second problème, PUZZLE-POSITION, considère la connaissance de la position des pièces. Il semble en pratique bien plus simple que tous les problèmes précédemment considérés.
+        Sur des instances de grande taille générées aléatoirement, un humain peut résoudre le problème à la main très rapidement.
+        (Si vous voulez vous prêter au jeu et vous rendre compte de la simplicité du problème, vous trouverez <a href="https://behaguequentin.github.io/Programmes/Puzzle.html">ici</a> un générateur d'instances aléatoires).
+    </p>
+    <p style="margin-top: 40px;">
+        Tentons donc de montrer que ce problème est dans la classe $P$ en exhibant un algorithme qui le résout en temps polynomial.
+        On remarque immédiatement que les contours peuvent être orienté correctement en $O(m+n)$ où $m\times n$ est la dimension du puzzle.
+        On a ainsi un important gain d'information sur l'orientation des pièces de la couronne interne. Une première idée consiste alors en un algorithme de propagation des contraintes.
+        Cet algorithme est illustré dans l'exemple de la Figure 4.
+    </p>
+    <div style="text-align: center; margin:20px">
+        <figure role="figure">
+            <img src="../../assets/images/propagationcontraintes.gif" width="40%">
+            <figcaption style="margin-top: 20px;">
+            <strong>Figure 4 - </strong> Execution de l'algorithme de propagation des contraintes sur un exemple.
+            </figcaption>
+        </figure>
+    </div>    
+    <p style="margin-top: 40px;">
+        En pratique, l'algorithme de propagation des contraintes est très efficace, pourtant, il échoue à résoudre certaines instances.
+        En étudiant de plus près les configurations sur lesquels l'algorithme échoue, on peut établir la condition nécessaire suivante :
+    </p>
+
+    <div class="box02"><p><strong>Théorème :</strong> </p>
+        <p>
+            Les instances de PUZZLE-POSITION contenant strictement moins de $4$ pièces de la forme $(i, i, i, j)$ avec $i\neq j$, sont résolues en $O((mn)^2)$ par l'algorithme de propagation des contraintes.
+        </p>
+    </div>
+    <p style="margin-top: 40px;">
+        Malgré cette apparente facilité, on ne parvient pas à trouver d'algorithme en temps polynomial qui trouve une solution pour toute instance.
+        Est-il possible que ce problème soit $NP$-complet ?
+    <p>
+
+    <h2 style="margin-top: 40px;">$NP$-complétude de PUZZLE-POSITION</h2>
+    <p style="margin-top: 40px;">
+        L'objet de cet article était en partie de présenter les grandes lignes de mon TIPE, et notamment le raisonnement qui m'a amené à considérer ces problèmes.
+        Mais avant tout, il me tenait à cœur de présenter en détail la $NP$-complétude de PUZZLE-POSITION, ce qui est à mes yeux le plus beau résultat de ce TIPE.
+        Le raisonnement est très détaillé, et arrangé sous forme d'étapes, vous pouvez donc arrêter votre lecture à tout moment pour tenter de répondre à chaque sous question par vous-même.
+    </p>
+    <p  style="margin-top: 40px;">
+        Je laisse au lecteur la liberté de vérifier que PUZZLE-POSITION $\in NP$ pour m'attaquer directement à la $NP$-difficulté.
+        L'idée directrice de la réduction est de former une sorte de réseau électrique dont les composants sont formés de pièces de PUZZLE.
+    </p>
+    <p style="margin-top: 40px;">
+        Mais d'où sort cette idée ? 
+        Comme on l'a vu, les tuiles problématiques sont celles de la forme $(i, i, i, j)$ avec $i \neq j$.
+        Elles sont problématiques car elles peuvent prendre deux positions, même si on a connaissance de deux de ses faces voisines.
+        On a donc envie de faire prendre des valeurs binaires portées par le "signal électrique" en fonction de l'orientation des pièces.
+        Or, nous connaissons un autre problème qui traite de valeurs binaires : $3$-SAT.
+    </p> 
+    <p style="margin-top: 40px;">
+        Une première question se pose, comment transmettre le signal ? 
+        Étant donné que la seule disposition possible est une grille, il suffit de pouvoir transmettre le signal en ligne droite ou sous un angle de $90°$ pour atteindre toutes les cases.
+        Les constructions de la Figure 5 conviennent.
+    </p>
+    <div style="text-align: center; margin:20px">
+        <figure role="figure">
+            <img src="../../assets/images/transmissionsignal.png" width="70%">
+            <figcaption style="margin-top: 20px;">
+            <strong>Figure 5 - </strong> Constructions pour la transmittion du "signal" (valeur de vérité).
+            </figcaption>
+        </figure>
+    </div>
+    <p>
+        Regardons de plus près les pièces problématiques et tentons de représenter la brique la plus importante pour que la construction fonctionne : une clause.
+        Malheureusement, ce n'est pas si simple, j'ai longtemps échoué à représenter une clause avant de m'intéresser à un autre problème : $1$-in-$3$ SAT.
+        (En vérité, j'ai trouvé la construction qui va suivre, et je me suis ensuite demandé si ce problème en particulier était $NP$-complet. Il s'avère que c'était effectivement le cas, ouf !)
+    </p>
+
+    <div class="box01">
+        <p><strong>Définition :</strong> Le problème de décision PUZZLE-ORIENTATION est défini par :</p>
+        <ul>
+            <li><strong>Instance :</strong> Une formule propositionnelle $\varphi$ sous forme 3-CNF.</li>
+            <li><strong>Question :</strong> Existe-t-il une valuation telle qu'exactement un littéral soit vrai dans chaque clause de $\varphi$ ?</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin:20px">
+        <figure role="figure">
+            <img src="../../assets/images/clause.png" width="40%">
+            <figcaption style="margin-top: 20px;">
+            <strong>Figure 6 - </strong> Représentation d'une clause.
+            </figcaption>
+        </figure>
+    </div>
+    <p style="margin-top: 40px;">
+        Attaquons-nous maintenant à la dernière brique élémentaire : les variables.
+        Là, ça se complique encore, en effet, quoi qu'on fasse, il ne semble pas possible de représenter les variables sans qu'une partie du signal ne "s'échappe".
+        En fait, la solution à ce problème va venir en toute fin de preuve, ne nous soucions pas des signaux qui sortent.
+    </p>
+
+    <p style="margin-top: 40px;"> 
+        La difficulté ici est de représenter les variables et leur négation autant de fois qu'elles apparaissent dans $\varphi$ tout en s'assurant qu'elle ne contredise pas.
+        Par exemple, on ne peut pas créer deux instances de $x_1$ qui valent $1$ et $0$, sinon, la réduction ne fonctionnera pas.
+        Pour cela, nous allons utiliser une boucle de synchronisation. qui passe par toutes les représentations d'une même variable, comme illustré Figure 7.
+        (Le cas d'une négation de variable n'est pas représenté sur la figure, mais je laisse au lecteur l'occasion de trouver comment la représenter.)
+    </p>
+
+    <div style="text-align: center; margin:20px">
+        <figure role="figure">
+            <img src="../../assets/images/variable.png" width="70%">
+            <figcaption style="margin-top: 20px;">
+            <strong>Figure 7 - </strong> Représentation de l'ensemble des occurences d'une variable et sa négation.
+            </figcaption>
+        </figure>
+    </div>
 
 
+    <p style="margin-top: 40px;">
+        Enfin, il ne reste plus qu'à relier tout ça, mais, c'est à ce moment-là qu'on rencontre un nouveau problème, pfff... 
+        A part pour des cas très simples, il va falloir que les "signaux" se croisent. La solution est donnée Figure 8.
+    </p>
+
+    <div style="text-align: center; margin:20px">
+        <figure role="figure">
+            <img src="../../assets/images/croisemment.png" width="40%">
+            <figcaption style="margin-top: 20px;">
+            <strong>Figure 7 - </strong> Représentation d'un croisement de "signaux".
+            </figcaption>
+        </figure>
+    </div>
+
+    <p style="margin-top: 40px;">
+        Sans rentrer dans les détails du procédé, on montre qu'il est toujours possible de représenter une formule en temps polynomial en sa taille. 
+        Le procédé est illustré sur un exemple en Figure 8.
+    </p>
+
+    <div style="text-align: center; margin:20px">
+        <figure role="figure">
+            <img src="../../assets/images/exemplereduction.png" width="60%">
+            <figcaption style="margin-top: 20px;">
+            <strong>Figure 8 - </strong> Construction pour $\varphi = (x_1 \vee \lnot x_2 \vee x_3) \wedge (x_1 \vee  x_4 \vee\lnot x_5) \wedge (x_5 \vee x_2 \vee \lnot x_1)$, $n = 3$.
+            </figcaption>
+        </figure>
+    </div>
+
+    <p>
+        Enfin ! On a fini ? Le lecteur attentif remarquera qu'il reste deux problèmes, les signaux qui "s'échappent" et la $NP$complétude de $1$-in-$3$ SAT.
+        Pour le premier problème, qui m'a en réalité pris un temps fou à résoudre, c'est plutôt simple.
+        Il suffit en fait de prendre la construction symétrique selon la dernière ligne, les assembler, puis changer les signes des blocs centraux de toutes les clauses de la partie basse. Et voilà !
+    </p><p>
+        Pour le deuxième problème, vous en trouverez une démonstration dans ce <a href="../../assets/files/td_npcompletude.pdf">TD de l'ENS Cachan</a>.
+    </p>
 
 </div>
 

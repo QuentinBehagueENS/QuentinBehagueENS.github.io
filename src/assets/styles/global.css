@@ -24,6 +24,7 @@ h2 {
 h3 {
     margin: 1vw;
 }
+
 ul {
     text-align: left;
     font-family: "Georgia";
@@ -43,6 +44,12 @@ p {
     white-space: normal;
     width: 100%; 
     margin: 0 auto;
+}
+
+figcaption {
+    font-family: "Georgia";
+    margin-top: 20px;
+    font-size: large;
 }
 
 .math {
@@ -170,7 +177,9 @@ nav > ul li:hover .sous{
 .box02{
     padding: 10px;
     margin : 20px;
-    background-color: rgb(210, 210, 210);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 4px 8px #5d5d5d;
+    border: #000000 solid 2px;
 }
 
 .imglink {
