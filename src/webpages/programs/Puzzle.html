@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suite de Syracuse</title>
+    <link href="../../assets/styles/global.css" rel="stylesheet">
+    <link href="../../../public/favicon.png" rel="icon" type="image/x-icon">
+    <style>
+        #canvas-container {
+            width:40vw; 
+            height: 40vw; 
+            display:flex; 
+            justify-content: center;
+        }
+        #slider-container {
+            font-family: "Georgia";
+            font-size: large;
+            margin-bottom: 10px;
+        }
+        #cont {
+            width: 40%; 
+            margin: 0 auto; 
+            aspect-ratio: 1; 
+            padding : 20px
+        }
+        @media (max-width: 768px) {
+            #cont{
+                width: 80%;
+                aspect-ratio: 1; 
+                margin: 0 auto; 
+                padding : 20px
+            }
+        }
+    </style>
+</head>
+
+<!-- Navigation menu -->
+<nav style="z-index: 10;">
+    <ul>
+        <li><a href="../../../index.html">Accueil</a></li>
+        <li><a href="../blog.html">Blog</a></li>
+        <li class="deroulant"><a>Programmes</a>
+            <ul class="sous">
+                <li><a href="../programs/Syracuse.html">Suite de Syracuse</a></li>
+                <li><a href="../programs/Julia.html">Ensemble de Julia</a></li>
+                <li><a>Puzzle</a></li>
+                <li><a href="../programs/Twiddle.html">Jeu du Twiddle</a></li>
+            </ul>
+        </li>
+        <li class="deroulant"><a>Contact</a>
+            <ul class="sous">
+                <li><a href="https://github.com/QuentinBehagueENS">Mon GitHub</a></li>
+                <li><a>quentin.behague@ens-rennes.fr</a></li>
+                <li><a>06 46 15 00 15</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<body background="../../assets/images/background.png" bgproperties="fixed"-->
+
+
+<div id="slider-container" style="width : 700px; text-align: center; margin: auto;">
+        
+    <div id="selected-value-width" style="font-size : 1vw;">Largeur : <span id="sliderValueWidth">6</span></div>
+    <label for="numberSliderWidth"></label>
+    <input type="range" id="numberSliderWidth" min="1" max="20" value="6" step="1" style="width: 400px;" >
+    
+    <div id="selected-value-height" style="font-size : 1vw;">Hauteur : <span id="sliderValueHeight">6</span></div>
+    <label for="numberSliderHeight"> </label>
+    <input type="range" id="numberSliderHeight" min="1" max="20" value="6" step="1" style="width: 400px;">
+    
+    <div id="selected-color-list-size" style="font-size : 1vw;">Nombre de couleurs utilisés: <span id="colorListSizeValue">2</span></div>
+    <label for="colorListSize"></label>
+    <input type="range" id="colorListSize" min="2" max="20" value="2" step="1" style="width: 400px;">
+    <br>
+    <div id = "shuffle-buttons">
+        <button class="bouton"  id="shuffleButton" >Mélanger</button>
+        <button class="bouton" id="shuffleRotateButton" class="shuffle-button">Mélanger (uniquement les rotations)</button>
+        <button class="bouton" id="shufflePlacementButton" class="shuffle-button">Mélanger (uniquement les positions)</button>
+    </div>
+</div>
+
+
+<div class="box01" id="cont">
+    <div id="canvas-container" style="margin: 0 auto; width: 100%; height: 100%;">
+        <canvas id="myCanvas"></canvas>
+    </div>
+</div>
+
+<br>
+
+<script type="text/javascript" src="../../assets/scripts/puzzle.js"></script>
+<script>window.addEventListener('resize', resizeCanvas);</script>
+
+</body>
+</html>

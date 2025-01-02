@@ -7,7 +7,6 @@
     <link href="../../assets/styles/global.css" rel="stylesheet">
     <link href="../../../public/favicon.png" rel="icon" type="image/x-icon">
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         MathJax = {
             tex: {
@@ -21,23 +20,24 @@
         };
     </script>
     <style>
+        #clause {display: none;}
+        #trans{display: none;}
+        #var{display: none;}
+        #cross{display: none;}
         @media(max-width: 768px){
             .defteh {
-                transition: width 0.3s ease; 
                 padding: 5px;
                 margin: 5px;
             }
         }
         @media(min-width: 768px){
             .whole{
-                transition: 1s ease; 
                 margin-left: 10%; 
                 margin-right: 10%;
             }
         }
         @media(max-width: 768px){
             .whole{
-                transition: 1s ease; 
                 margin-left: 10px; 
                 margin-right: 10px;
             }
@@ -47,6 +47,30 @@
         }
         @media(max-width: 768px){
             .t50{
+                width:100%;
+            }
+        }
+        .t30{
+            width: 30%;
+        }
+        @media(max-width: 768px){
+            .t30{
+                width:100%;
+            }
+        }
+        .t40{
+            width: 40%;
+        }
+        @media(max-width: 768px){
+            .t40{
+                width:100%;
+            }
+        }
+        .t70{
+            width: 70%;
+        }
+        @media(max-width: 768px){
+            .t70{
                 width:100%;
             }
         }
@@ -63,6 +87,8 @@
             <ul class="sous">
                 <li><a href="../programs/Syracuse.html">Suite de Syracuse</a></li>
                 <li><a href="../programs/Julia.html">Ensemble de Julia</a></li>
+                <li><a href="../programs/Puzzle.html">Puzzle</a></li>
+                <li><a href="../programs/Twiddle.html">Jeu du Twiddle</a></li>
             </ul>
         </li>
         <li class="deroulant"><a>Contact</a>
@@ -88,26 +114,30 @@
     <h2>Motivation</h2>
     <p>
         Résoudre un puzzle, c'est généralement très long, sauf si vous vous appelez Alejandro Clemente. Mais, quand est-il pour un ordinateur ? 
-        Les puzzles sont-ils facile à résoudre algorithmiquement ?
-    </p>
-    <p>
+        Les puzzles sont-ils facile à résoudre algorithmiquement ? 
+    <br>
         C'est la question que je me suis posé à l'occasion de mon sujet de TIPE sur le thème du jeu et des sports (2022-2023), et la réponse est... ça dépend !
-    </p>
-    <p>
+    <br><br>
         En effet, dans la majorité des puzzles, si deux pièces quelconques sont compatibles, alors elles seront nécessairement voisines dans la solution. 
         Dans ce cas-là, c'est simple de résoudre le problème : pour un puzzle de taille $m \times n$, il suffit d'effectuer $O(m^2n^2)$ opérations.
         Malheureusement, si on autorise des pièces qui ne sont pas voisines dans le puzzle complet à être compatible, ça se corse !
-    </p>
-    <p>
-        À l'attention du lecteur : Cet article n'est qu'un résumé peu rigoureux d'un travail de recherche plus complet.
-        Je vous conseille, si le sujet vous intéresse, de lire cet article plutôt que l'article détaillé, moins "divertissant", tout de même disponible <a href="../../assets/files/rapportpuzzle.pdf">ici</a>.
+    <br><br>
+        <strong>À l'attention du lecteur :</strong> Cet article n'est qu'un résumé peu rigoureux d'un travail de recherche plus complet.
+        Je vous conseille malgré tout de le lire plutôt que de vous attaquer au rapport complet, qui est moins "divertissant".
+        (Le pdf du rapport disponible en fin d'article. Il contient des résultats qui ne sont pas présents dans cet article.)
     </p>
 
 
     <h2 style="margin-top: 40px;">Représentation du problème</h2>
     <p>
         Pour représenter une pièce de puzzle, nous utiliserons des tuiles de Wang étiquetée par des entiers relatifs.
-        Si $e$ est la valeur assignée à une face, alors, $|e|$ représente le type de la face et $\textrm{sng}(e)$ indique si la face est mâle ou femelle.
+        Si $e$ est la valeur assignée à une face, alors :
+    </p>
+    <ul>
+        <li>$|e|$ représente le type de la face</li>
+        <li>$\textrm{sng}(e)$ indique si la face est mâle ou femelle.</li>
+    </ul>
+    <p>
         La valeur $0$ est particulière, on s'en servira pour indiquer les faces plates.
     </p>
     <div style="text-align: center; margin:20px">
@@ -119,11 +149,11 @@
         </figure>
     </div>
     <p>
-        Une permutation des pièces est donc considérée comme valide si toutes les paires de faces voisines portent des valeurs opposées et si les seules faces portant l'indice $0$ sont utilisées pour les contours.
+        Une permutation des pièces est donc considérée comme valide si toutes les paires de faces voisines portent des valeurs opposées et si les faces portant l'indice $0$ sont utilisées pour les contours.
     </p>
     <div style="text-align: center; margin:20px">
         <figure role="figure">
-            <img src="../../assets/images/instancevalide.png" width="40%">
+            <img src="../../assets/images/instancevalide.png" class="t30">
             <figcaption style="margin-top: 20px;">
             <strong>Figure 2 - </strong>Instance valide pour le problème PUZZLE.
             </figcaption>
@@ -136,7 +166,7 @@
         <p><strong>Définition :</strong> Le problème de décision PUZZLE est défini par :</p>
         <ul>
             <li><strong>Instance : </strong>Un couple $(m, n)$ et un jeu de $m \times n$ pièces.</li>
-            <li><strong>Question :</strong> Existe-t-il un pavage de dimensions $m \times n$ tel que pour toute pièce, chaque bord de cette pièce est numéroté par l'opposé du bord de la pièce adjacente ?</li>
+            <li><strong>Question :</strong> Existe-t-il un pavage de dimensions $m \times n$ tel que pour toute pièce, chaque bord est numéroté par l'opposé du bord de la pièce adjacente ?</li>
         </ul>
     </div>
     <p>
@@ -146,16 +176,19 @@
         <p><strong>Définition :</strong> Le problème de décision PUZZLE-POSITION est défini par :</p>
         <ul>
             <li><strong>Instance : </strong>Un couple $(m, n)$, un jeu de $m \times n$ pièces, une liste correspondant à la position des pièces dans le pavage.</li>
-            <li><strong>Question : </strong>Existe-t-il une orientation des pièces telle que pour toute pièce du pavage obtenu, chaque bord de cette pièce est numérotée par l'opposé du bord de la pièce adjacente ?</li>
+            <li><strong>Question : </strong>Existe-t-il une orientation des pièces telle que pour toute pièce du pavage obtenu, chaque bord est numérotée par l'opposé du bord de la pièce adjacente ?</li>
         </ul>
     </div>
     <div class="box01 defteh">
         <p><strong>Définition :</strong> Le problème de décision PUZZLE-ORIENTATION est défini par :</p>
         <ul>
             <li><strong>Instance : </strong>Un couple $(m, n)$, un jeu de $m \times n$ pièces, une liste correspondant à l'orientation des pièces dans le pavage.</li>
-            <li><strong>Question :</strong> Existe-t-il une orientation des pièces telle que pour toute pièce du pavage obtenu, chaque bord de cette pièce est numérotée par l'opposé du bord de la pièce adjacente ?</li>
+            <li><strong>Question :</strong> Existe-t-il une orientation des pièces telle que pour toute pièce du pavage obtenu, chaque bord est numérotée par l'opposé du bord de la pièce adjacente ?</li>
         </ul>
     </div>
+    <p>
+        Pour vous faire une petite idée de ce que représentent ces 3 problèmes en pratique, vous pouvez essayez d'en résoudre une instance par vous-même grace à mon <a href="../programs/Puzzle.html">générateur d'instances.</a>
+    </p>
 
 
     <h2 style="margin-top: 40px;">$NP$-complétude et variantes</h2>
@@ -171,22 +204,21 @@
     </div>
     <p>
     Pour mon TIPE, j'avais démontré ce résultat d'une autre manière en prouvant que le problème consistant à résoudre uniquement le contour de PUZZLE était déjà $NP$-complet (en effectuant une réduction à 2-PARTITION).
-    Il ne reste alors qu'à effectuer une seconde réduction immédiate en remplissant l'intérieur du puzzle avec des pièces "qui fonctionnent bien" (cf Figure 3).
+    Il ne reste alors qu'à effectuer une seconde réduction en remplissant l'intérieur du puzzle avec des pièces "qui fonctionnent bien" (cf Figure 3).
     </p>
     <div style="text-align: center; margin:20px">
         <figure role="figure">
-            <img src="../../assets/images/reductioncontour.PNG" width="70%">
+            <img src="../../assets/images/reductioncontour.PNG" class="t70">
             <figcaption style="margin-top: 20px;">
-               <strong>Figure 3 - </strong> Instance valide pour le problème PUZZLE.
+               <strong>Figure 3 - </strong> Construction pour la réduction CONTOUR $\leq_p$ PUZZLE.
             </figcaption>
          </figure>
     </div>
-    <p> 
-        Pour rendre la tâche plus intéressante, je me suis donc intéressé à deux variantes du problème PUZZLE. 
-        La première, PUZZLE-ORIENTATION, considère que l'on a connaissance de l'orientation des pièces, cela réduit fortement le nombre de possibilités, et le problème est alors plus simple.
-    </p>
     <p style="margin-top: 40px;">
-        Cependant il reste encore $NP$-complet. En réalité, la preuve proposé par Yasuhiko Takenaga et Toby Walsh de la $NP$-complétude de PUZZLE ne se sert pas du fait que les pièces ont une orientation, elle peut donc trivialement être adaptée pour ce nouveau problème.
+        Pour rendre la tâche plus intéressante, j'ai donc imaginé deux variantes du problème PUZZLE. 
+        La première, PUZZLE-ORIENTATION, considère que l'on a connaissance de l'orientation des pièces. Cette information réduit fortement le nombre de possibilités à envisager, et le problème est ainsi plus facile à résoudre.
+    <br><br>
+        Cependant, cette première variante est aussi $NP$-complète. En réalité, la preuve proposé par Yasuhiko Takenaga et Toby Walsh de la $NP$-complétude de PUZZLE ne se sert pas du fait que les pièces ont une orientation, elle peut donc trivialement être adaptée pour ce nouveau problème.
         Considérer ce problème à pourtant son intérêt comme nous allons le voir dans la suite.
     </p>
     <div class="box02 defteh"><p><strong>Théorème :</strong> </p>
@@ -195,26 +227,33 @@
         </p>
     </div>
     <p style="margin-top: 40px;">
-        Le second problème, PUZZLE-POSITION, considère la connaissance de la position des pièces. Il semble en pratique bien plus simple que tous les problèmes précédemment considérés.
-        Sur des instances de grande taille générées aléatoirement, un humain peut résoudre le problème à la main très rapidement.
-        (Si vous voulez vous prêter au jeu et vous rendre compte de la simplicité du problème, vous trouverez <a href="https://behaguequentin.github.io/Programmes/Puzzle.html">ici</a> un générateur d'instances aléatoires).
+        La seconde variantes, PUZZLE-POSITION, considère la connaissance de la position des pièces. Il semble en pratique bien plus simple que tous les problèmes précédemment considérés.
+        Même sur des instances de grande taille générées aléatoirement, un humain peut résoudre le problème à la main très rapidement.
+        (Si vous voulez vous prêter au jeu, c'est <a href="../programs/Puzzle.html">ici</a>).
     </p>
     <p style="margin-top: 40px;">
         Tentons donc de montrer que ce problème est dans la classe $P$ en exhibant un algorithme qui le résout en temps polynomial.
-        On remarque immédiatement que les contours peuvent être orienté correctement en $O(m+n)$ où $m\times n$ est la dimension du puzzle.
-        On a ainsi un important gain d'information sur l'orientation des pièces de la couronne interne. Une première idée consiste alors en un algorithme de propagation des contraintes.
-        Cet algorithme est illustré dans l'exemple de la Figure 4.
+        On remarque immédiatement que les contours peuvent être orienté correctement en $O(m+n)$ (où $m\times n$ est la dimension du puzzle).
+        En effet, ce sont les $0$ qui nous fournissent l'orientation des pièces.
+        <br><br>
+        On connait ainsi avec certitude l'étiquettes des faces entourant la première couronne interne. 
+        Ces informations contraignent la position de ces pièces, et si on parvient à s'en servir pour la résoudre, on aura de nouvelles contraintes pour la couronnes suivante, etc.
+        <br>
+        Une première idée consiste alors en un algorithme de propagation des contraintes.
+        (Cet algorithme ne procède pas vraiment couronne par couronne, car il prend aussi en compte le fait que les tuiles de la forme $(i,i,i,i)$ sont correctement orientées.)
+        <br>
+        Son exécution est illustrée sur l'exemple de la Figure 4.
     </p>
     <div style="text-align: center; margin:20px">
         <figure role="figure">
-            <img src="../../assets/images/propagationcontraintes.gif" width="40%">
+            <img src="../../assets/images/propagationcontraintes.gif" class="t40">
             <figcaption style="margin-top: 20px;">
-            <strong>Figure 4 - </strong> Execution de l'algorithme de propagation des contraintes sur un exemple.
+            <strong>Figure 4 - </strong> Exécution de l'algorithme de propagation des contraintes sur un exemple.
             </figcaption>
         </figure>
     </div>    
     <p style="margin-top: 40px;">
-        En pratique, l'algorithme de propagation des contraintes est très efficace, pourtant, il échoue à résoudre certaines instances.
+        En pratique, l'algorithme de propagation des contraintes est très efficace, il s'effectue en $O(n^2)$, pourtant, il échoue à résoudre certaines instances.
         En étudiant de plus près les configurations sur lesquels l'algorithme échoue, on peut établir la condition nécessaire suivante :
     </p>
 
@@ -224,43 +263,32 @@
         </p>
     </div>
     <p style="margin-top: 40px;">
-        Malgré cette apparente facilité, on ne parvient pas à trouver d'algorithme en temps polynomial qui trouve une solution pour toute instance.
+        À vrai dire, on peut améliorer ce résultat en étudiant d'autres conditions nécessaires qui expliquent pourquoi l'algorithme de propagation échoue rarement sur une instance aléatoire.
+        Malgré cette apparente facilité, on ne parvient pas à trouver d'algorithme en temps polynomial qui trouve une solution pour <strong>toute</strong> instance.
         Est-il possible que ce problème soit $NP$-complet ?
     <p>
 
     <h2 style="margin-top: 40px;">$NP$-complétude de PUZZLE-POSITION</h2>
     <p style="margin-top: 40px;">
-        L'objet de cet article était en partie de présenter les grandes lignes de mon TIPE, et notamment le raisonnement qui m'a amené à considérer ces problèmes.
-        Mais avant tout, il me tenait à cœur de présenter en détail la $NP$-complétude de PUZZLE-POSITION, ce qui est à mes yeux le plus beau résultat de ce TIPE.
-        Le raisonnement est très détaillé, et arrangé sous forme d'étapes, vous pouvez donc arrêter votre lecture à tout moment pour tenter de répondre à chaque sous question par vous-même.
-    </p>
-    <p  style="margin-top: 40px;">
+        L'objectif de cet article était en partie de présenter les grandes lignes de mon TIPE, et notamment le raisonnement qui m'a amené à considérer ces problèmes.
+        Mais avant tout, il me tenait à cœur de présenter en détail la $NP$-complétude de PUZZLE-POSITION.
+    <br><br>
+        Dans la suite, nous allons résoudre le problème, étape par étape. 
+        Cela permettra nottament au plus courageux d'entre vous d'arrêter leur lecture à tout moment pour tenter d'effectuer chaque étapes par vous-même.
+        (Pour ces lecteurs investit, il est bon de savoir qu'il suffit de bloc de taille $3\times3$ pour représenter les éléments dont on parle dans la suite).
+    <p>
+        <ul><li><h3 style="margin-top: 40px;">Par où commencer ?</h3></li></ul>
+    <p>
         Je laisse au lecteur la liberté de vérifier que PUZZLE-POSITION $\in NP$ pour m'attaquer directement à la $NP$-difficulté.
         L'idée directrice de la réduction est de former une sorte de réseau électrique dont les composants sont formés de pièces de PUZZLE.
-    </p>
-    <p style="margin-top: 40px;">
-        Mais d'où sort cette idée ? 
+    <br><br>
+        Mais d'où sort cette idée ?  <br>
         Comme on l'a vu, les tuiles problématiques sont celles de la forme $(i, i, i, j)$ avec $i \neq j$.
-        Elles sont problématiques car elles peuvent prendre deux positions, même si on a connaissance de deux de ses faces voisines.
-        On a donc envie de faire prendre des valeurs binaires portées par le "signal électrique" en fonction de l'orientation des pièces.
+        Elles sont problématiques car elles peuvent prendre deux positions, même si on a connaissance de deux des faces voisines.
+        On a donc envie de s'en servir pour représenter des valeurs binaires en fonction de leur orientation.
         Or, nous connaissons un autre problème qui traite de valeurs binaires : $3$-SAT.
     </p> 
-    <ul><li><h3 style="margin-top: 40px;">Transmittion des valeurs de vérité</h3></li></ul>
-    
-    <p style="margin-top: 10px;">
-        Une première question se pose, comment transmettre le signal ? 
-        Étant donné que la seule disposition possible est une grille, il suffit de pouvoir transmettre le signal en ligne droite ou sous un angle de $90°$ pour atteindre toutes les cases.
-        Les constructions de la Figure 5 conviennent.
-    </p>
-    <div style="text-align: center; margin:20px">
-        <figure role="figure">
-            <img src="../../assets/images/transmissionsignal.png" width="70%">
-            <figcaption style="margin-top: 20px;">
-            <strong>Figure 5 - </strong> Constructions pour la transmittion du "signal" (valeur de vérité).
-            </figcaption>
-        </figure>
-    </div>
-    <ul><li><h3 style="margin-top: 80px;">Représentation des clauses</h3></li></ul>
+    <ul><li><h3 style="margin-top: 40px;">Représentation des clauses</h3></li></ul>
     <p>
         Regardons de plus près les pièces problématiques et tentons de représenter la brique la plus importante pour que la construction fonctionne : une clause.
         Malheureusement, ce n'est pas si simple, j'ai longtemps échoué à représenter une clause avant de m'intéresser à un autre problème : $1$-in-$3$ SAT.
@@ -268,18 +296,42 @@
     </p>
 
     <div class="box01 defteh">
-        <p><strong>Définition :</strong> Le problème de décision PUZZLE-ORIENTATION est défini par :</p>
+        <p><strong>Définition :</strong> Le problème de décision $1$-in-$3$ SAT est défini par :</p>
         <ul>
             <li><strong>Instance :</strong> Une formule propositionnelle $\varphi$ sous forme 3-CNF.</li>
             <li><strong>Question :</strong> Existe-t-il une valuation telle qu'exactement un littéral soit vrai dans chaque clause de $\varphi$ ?</li>
         </ul>
     </div>
-
-    <div style="text-align: center; margin:20px">
+    <p>
+        Considérer ce problème nous permettra de trouver une représentation de clause contenue dans un groupe de $3\times3$ cases. Elle devra être composée de trois entrée
+        Dans la suite, nous noterons $S$ l'indice des faces correspondant au "signal" transmettant les valeurs de vérités et $I$ sera utilisé pour les faces inertes, celles qui ne changerons pas, peut importe les valeurs de vérités. 
+        Un signal représente <I>vrai</I> si la face supérieure dans le sens de propagation porte l'étiquette $S$ et <I>faux</I> si elle porte $-S$.
+        La construction doit admettre une configuration valide si et seulement si exactement une des 3 valeurs de vérité transmises est <I>vrai</I>.
+    </p>
+    <div style="text-align: center;" id="boutonclause"><button class="bouton" onclick="toggleContenu('clause')">Solution</button></div>
+    <div style="text-align: center; margin:20px" id="clause">
         <figure role="figure">
-            <img src="../../assets/images/clause.png" width="40%">
+            <img src="../../assets/images/clause.png" class="t40">
             <figcaption style="margin-top: 20px;">
             <strong>Figure 6 - </strong> Représentation d'une clause.
+            </figcaption>
+        </figure>
+    </div>
+
+    <ul><li><h3 style="margin-top: 40px;">Transmittion des valeurs de vérité</h3></li></ul>
+    
+    <p style="margin-top: 10px;">
+        Même en admettant qu'on dispose d'une représentation pour les variables, comment transmettre les valeurs de vérités jusqu'aux clauses? 
+        Étant donné que la seule disposition possible est une grille (les pièces sont carrées), il suffit de pouvoir transmettre le signal en ligne droite ou sous un angle de $90°$ pour atteindre toutes les cases.
+        Les constructions de la Figure 5 conviennent.
+    </p>
+
+    <div style="text-align: center;" id="boutontrans"><button class="bouton" onclick="toggleContenu('trans')">Solution</button></div>
+    <div style="text-align: center; margin:20px" id="trans">
+        <figure role="figure">
+            <img src="../../assets/images/transmissionsignal.png" class="t70">
+            <figcaption style="margin-top: 20px;">
+            <strong>Figure 5 - </strong> Constructions pour la transmittion du "signal" (valeur de vérité).
             </figcaption>
         </figure>
     </div>
@@ -287,19 +339,20 @@
     <p style="margin-top: 10px;">
         Attaquons-nous maintenant à la dernière brique élémentaire : les variables.
         Là, ça se complique encore, en effet, quoi qu'on fasse, il ne semble pas possible de représenter les variables sans qu'une partie du signal ne "s'échappe".
-        En fait, la solution à ce problème va venir en toute fin de preuve, ne nous soucions pas des signaux qui sortent.
-    </p>
-
-    <p style="margin-top: 40px;"> 
-        La difficulté ici est de représenter les variables et leur négation autant de fois qu'elles apparaissent dans $\varphi$ tout en s'assurant qu'elle ne contredise pas.
+        Pour rappel, il faut obtenir une instance de PUZZLE-POSITION, en particulier, il faut que les cases du contour aient une orientation fixe.
+        Si un signal n'a pas de destination, comme une clauses, il va finir par atteindre un bord, et sera contraint d'adopter une certaine orientation.
+        En fait, la solution à ce problème va venir en toute fin de preuve, ne nous soucions pas des signaux qui s'échappent des blocs $3\times3$ représentant les variables pour le moment.
+    <br><br>
+        La difficulté ici est de représenter les variables et leur négation autant de fois qu'elles apparaissent dans $\varphi$ tout en s'assurant qu'elles ne contredisent pas.
         Par exemple, on ne peut pas créer deux instances de $x_1$ qui valent $1$ et $0$, sinon, la réduction ne fonctionnera pas.
         Pour cela, nous allons utiliser une boucle de synchronisation. qui passe par toutes les représentations d'une même variable, comme illustré Figure 7.
         (Le cas d'une négation de variable n'est pas représenté sur la figure, mais je laisse au lecteur l'occasion de trouver comment la représenter.)
     </p>
 
-    <div style="text-align: center; margin:20px">
+    <div style="text-align: center;" id="boutonvar"><button class="bouton" onclick="toggleContenu('var')">Solution</button></div>
+    <div style="text-align: center; margin:20px" id="var">
         <figure role="figure">
-            <img src="../../assets/images/variable.png" width="70%">
+            <img src="../../assets/images/variable.png" class="t70">
             <figcaption style="margin-top: 20px;">
             <strong>Figure 7 - </strong> Représentation de l'ensemble des occurences d'une variable et sa négation.
             </figcaption>
@@ -308,13 +361,13 @@
 
     <ul><li><h3 style="margin-top: 80px;">Construction autorisant les croisemments de signaux</h3></li></ul>
     <p style="margin-top: 10px;">
-        Enfin, il ne reste plus qu'à relier tout ça, mais, c'est à ce moment-là qu'on rencontre un nouveau problème, pfff... 
-        A part pour des cas très simples, il va falloir que les "signaux" se croisent. La solution est donnée Figure 8.
+        Enfin, il ne reste plus qu'à relier tout ça, mais, c'est à ce moment-là qu'on rencontre un nouveau problème : à part pour des cas très simples, il va falloir que les "signaux" se croisent.
     </p>
 
-    <div style="text-align: center; margin:20px">
+    <div style="text-align: center;" id="boutoncross"><button class="bouton" onclick="toggleContenu('cross')">Solution</button></div>
+    <div style="text-align: center; margin:20px" id="cross">
         <figure role="figure">
-            <img src="../../assets/images/croisemment.png" width="40%">
+            <img src="../../assets/images/croisemment.png" class="t40">
             <figcaption style="margin-top: 20px;">
             <strong>Figure 8 - </strong> Représentation d'un croisement de "signaux".
             </figcaption>
@@ -329,7 +382,7 @@
 
     <div style="text-align: center; margin:20px">
         <figure role="figure">
-            <img src="../../assets/images/exemplereduction.png" width="60%">
+            <img src="../../assets/images/exemplereduction.png" class="t70">
             <figcaption style="margin-top: 20px;">
             <strong>Figure 9 - </strong> Construction pour <div class="math">$\varphi = (x_1 \vee \lnot x_2 \vee x_3) \wedge (x_1 \vee  x_4 \vee\lnot x_5) \wedge (x_5 \vee x_2 \vee \lnot x_1)$</div>, $n = 3$.
             </figcaption>
@@ -337,7 +390,7 @@
     </div>
 
     <p style="margin-top: 40px;">
-        Enfin ! On a fini ? Le lecteur attentif remarquera qu'il reste deux problèmes, les signaux qui "s'échappent" et la $NP$complétude de $1$-in-$3$ SAT.
+        Enfin ! On a fini ? Le lecteur attentif remarquera qu'il reste deux problèmes, les signaux qui "s'échappent" et la $NP$-complétude de $1$-in-$3$ SAT.
         Pour le premier problème, qui m'a en réalité pris un temps fou à résoudre, c'est plutôt simple.
         Il suffit en fait de prendre la construction symétrique selon la dernière ligne, les assembler, puis changer les signes des blocs centraux de toutes les clauses de la partie basse. Et voilà !
         Pour le deuxième problème, vous en trouverez une démonstration dans ce <a href="../../assets/files/td_npcompletude.pdf">TD de l'ENS Cachan</a>.
@@ -345,14 +398,14 @@
     <p>Nous pouvons encadrer ce très beau résultat !</p>
     <div class="box02 defteh"><p><strong>Théorème :</strong> </p>
         <p>
-            Le problème PUZZLE-ORIENTATION est $NP$-complet.
+            Le problème PUZZLE-POSITION est $NP$-complet.
         </p>
     </div>
 
     <h2 style="margin-top: 40px;">Retour sur le problème PUZZLE-ORIENTATION</h2>
     <p>Nous avons déjà rencontré certains des problèmes de décisions abordés dans cette partie, ajoutons tout de même leur définition pour faire bonne mesure :  </p>
     <div class="box01 defteh">
-        <p><strong>Définition :</strong> Le problème de décision PUZZLE est défini par :</p>
+        <p><strong>Définition :</strong> Le problème de décision CONTOUR est défini par :</p>
         <ul>
             <li><strong>Instance : </strong>Un couple $(m, n)$ et un jeu de $2m + 2n - 4$ pièces.</li>
             <li><strong>Question :</strong> Existe-t-il un contour de dimensions $m \times n$ tel que pour toute couple de pièces adjacentes, les bords en contact  soient numérotés par l'opposé l'un de l'autre ?</li>
@@ -375,52 +428,50 @@
     <p style="margin-top: 40px;">
         On sait déjà que le problème CONTOUR est $NP$-complet (par réduction à 3-PARTITION). On sait aussi que le problème CONTOUR-POSITION est dans $P$. Mais quand est-il de CONTOUR-ORIENTATION ?
         Il semble être d'une difficulté intermédiaire. Selon vous, $P$ ? $NP$-complet ?
-    </p>
-    <p>
-        Ici, nous allons utiliser une réduction à un problème de $P$.
-        Je trouve cette démonstration originale dans la mesure où on a rarement l'occasion de démontrer l'appartenance à $P$ autrement qu'en trouvant un algorithme en temps polynomial qui résoud le problème.
-    </p>
-    <p style="margin-top: 40px;">
-    Remarquons tout d'abord que la connaissance de l'orientation de la pièce nous fournit le contour auquel elle appartient (on peut aussi placer avec certitude les coins du contour)
+    <br>
+        Dans cette partie nous allons démontrer que ce problème est dans $P$. Nous démontrerons ce résultat d'une manière assez originale dans la mesure où nous n'allons pas trouver d'algorithme, mais nous allons faire une réduction à un problème de $P$.
+    <br><br>
+    Remarquons tout d'abord que la connaissance de l'orientation de la pièce nous fournit le contour auquel elle appartient (on peut aussi placer avec certitude les coins du contour).
     Le problème se reformule donc en un problème plus simple, étant donné une liste de paire $\displaystyle ((a_i, b_i))_{i\in [\![1, n]\!]}$, existe t-il un moyen de les mettre bout à bout de telle sorte que :
     $$ \forall i \in [\![1, n - 1 ]\!], b_i = - a_{i+1}$$
-    </p>
-
-    <p style="margin-top: 40px;">
+    <br>
     Une première idée pourrait être de considérer le graphe non orienté dont les sommets sont les $(a_i)$ et $(b_i)$, et les arêtes sont les couples, pour ensuite chercher la présence d'un chemin eulérien.
-    Cela fonctionne mal à cause des signes opposés. En effet, il faudrait rajouter des arêtes "artificielles" reliant $x$ à $-x$ autant de fois qu'ils apparaissent dans les couples.
+    Cela fonctionne mal à cause des signes opposés. En effet, il faudrait rajouter des arêtes "artificielles" reliant $x$ à $-x$ pour tout $x$ autant de fois qu'ils apparaissent dans les couples.
     (Si $x$ et $-x$ n'ont pas le même nombre d'occurence, il ny a pas de solution). 
     Cependant, en faisant cela on pourrait potentiellement passer par deux arêtes artificielles $\{x, -x\}$ et $\{-x,x\}$ à la suite. ce qui ne correspond pas à une suite de paire.
-    </p>
-
-    <p style="margin-top: 40px;">
+    <br><br>
         Mais n'abandonnons pas notre idée trop vite, il va simplement falloir considérer un graphe plus complexe qui empéchera le retour sur une arêtes fictive. 
         La construction est illustrée sur un exemple en Figure 10. (Il est laissé au soin du lecteur de vérifier qu'elle fonctionne.)
     </p>
 
     <div style="text-align: center; margin:20px">
         <figure role="figure">
-            <img src="../../assets/images/reductioneulerien.png" width="60%">
+            <img src="../../assets/images/reductioneulerien.png" class="t70">
             <figcaption style="margin-top: 20px;">
             <strong>Figure 10 - </strong> Construction pour la réduction CONTOUR-ORIENTATION $\leq_p$ CYCLE-EULÉRIEN.
             </figcaption>
         </figure>
     </div>
 
-    <ul><li><h3 style="margin-top: 40px;">Rapport de TIPE</h3></li></ul>
-    <p>Vous trouverez dans ce rapport le détail de toutes les preuves mentionnées dans cette article</p>
-    <div style="height: 100vh; border: solid #000 2px"><embed src="../../assets/files/rapportpuzzle.pdf" width="100%" height="100%" type="application/pdf"></div>
-
-    <ul><li><h3 style="margin-top: 40px;">Pour aller plus loin...</h3></li></ul>
+    <ul><li><h3 style="margin-top: 40px;">Conclusion et rapport de TIPE</h3></li></ul>
     <p>
-        Les résultats de cette section ne figurent pas dans le rapport ci-dessus !
+        Voilà qui conclut ce petit article, si celui-ci vous a plu, n'hésitez pas à me le faire savoir, cela m'encouragera à en rédiger d'autre dans le même style.
+        C'est assez difficile de trouver des sujets originaux et pourtant accessibles, donc je suis ouverts à toutes propositions.
+        Enfin je laisse à votre disposition mon rapport de TIPE qui détaille les raisonnement de cet article.
+        Si j'obtient quelques retours, je rajouterais une section à cet article contenant des résultats inédits.
     </p>
-
-
+    <div style="margin-top: 50px; height: 100vh; border: solid #000 2px"><embed src="../../assets/files/rapportpuzzle.pdf" width="100%" height="100%" type="application/pdf"></div>
 </div>
 
-
+<script>
+    function toggleContenu(id) {
+      const contenu = document.getElementById(id);
+      const bouton = document.getElementById("bouton"+id);
+      if (contenu.style.display === "none" || contenu.style.display === "") {
+        contenu.style.display = "block";
+        bouton.style.display = "none"
+      }
+    }
+  </script>
 </body>
-
 </html>
-
